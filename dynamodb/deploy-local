@@ -1,0 +1,2 @@
+aws cloudformation deploy --template-file template.yaml --stack-name audaud-dynamodb-stack --endpoint-url http://localhost:8000
+aws cloudformation describe-stacks --stack-name audaud-dynamodb-stack --region us-east-1 --query "Stacks[].Outputs"

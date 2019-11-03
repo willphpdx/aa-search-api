@@ -1,0 +1,8 @@
+sam deploy --template-file packaged.yaml \
+  --region us-east-1 \
+  --capabilities CAPABILITY_IAM \
+  --stack-name audaud-search-lambda-stack
+aws cloudformation describe-stacks \
+--stack-name audaud-search-lambda-stack \
+--region us-east-1 \
+--query "Stacks[].Outputs"

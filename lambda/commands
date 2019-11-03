@@ -1,0 +1,15 @@
+
+sam package --output-template packaged.yaml --s3-bucket audaud-api-lambda-code
+
+sam deploy --template-file packaged.yaml --region us-east-1 --capabilities CAPABILITY_IAM --stack-name audaud-lambda-stack
+
+sam local start-api
+
+aws cloudformation deploy --endpoint-url http://localhost:4581 --template-file template.yaml --stack-name audaud-dynamodb-stack
+
+DATA_DIR=/tmp/localstack/data localstack start
+aws dynamodb list-tables --endpoint-url http://localhost:4569
+aws dynamodb delete-item --table-name audaud-articles --key id=7f9399cb-8fb6-a960-38b3-78f556b6bd27 --endpoint-url http://localhost:4569
+
+
+curl -s https://slorgy0js4.execute-api.us-east-1.amazonaws.com/Prod/search/articles/v1?slug=the-music-treasury-for-9-september-2018-pianist-cyprian-katsariss | jq '.Items | length'

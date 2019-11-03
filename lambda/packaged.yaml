@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: audaud search API
+Globals:
+  Function:
+    Timeout: 3
+Resources:
+  SearchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: audaud-search-lambda
+      CodeUri: s3://audaud/lambda-staging/fb8603c42db545fb8759accb0598bc7d
+      Handler: index.handler
+      Runtime: nodejs8.10
+      Events:
+        Search:
+          Type: Api
+          Properties:
+            Path: /search/articles/v1
+            Method: get
+      Policies:
+      - AWSLambdaExecute
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:Query
+          - dynamodb:Scan
+          Resource: arn:aws:dynamodb:*:*:table/*
+Outputs:
+  SearchApi:
+    Description: API Gateway endpoint URL for Prod stage for Search function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/search/articles/v1
+  SearchFunction:
+    Description: Audaud Search Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - SearchFunction
+      - Arn
+  SearchFunctionIamRole:
+    Description: Implicit IAM Role created for Search function
+    Value:
+      Fn::GetAtt:
+      - SearchFunctionRole
+      - Arn

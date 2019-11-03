@@ -1,0 +1,14 @@
+{
+  "name": "audaud-search-api",
+  "version": "1.0.0",
+  "description": "A search API for retrieving Audaud articles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Will Hough",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.556.0"
+  }
+}

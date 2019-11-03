@@ -1,0 +1,4 @@
+sam deploy \
+  --template-file template.yaml \
+  --region us-east-1 \
+  --stack-name audaud-dynamodb-stack
